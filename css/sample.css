@@ -13,6 +13,9 @@ header{
     }
 }
 main{
+    .enemyHP{
+        text-align: center;
+    }
     .jankenN{
         display: flex;
         justify-content: center;

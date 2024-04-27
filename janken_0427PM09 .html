@@ -61,65 +61,26 @@ $("#gu_btn, #cho_btn, #par_btn").on("click", function() {
   clickOrder.push(buttonId);
   
   // ボタンが5回クリックされたときのみ処理を行う
-  if (clickOrder.length >= 5 &&
-      clickOrder[clickOrder.length - 5] === "gu_btn" &&
-      clickOrder[clickOrder.length - 4] === "gu_btn" &&
-      clickOrder[clickOrder.length - 3] === "par_btn" &&
-      clickOrder[clickOrder.length - 2] === "cho_btn" &&
-      clickOrder[clickOrder.length - 1] === "par_btn") {
+  if (clickOrder.length === 5 &&
+      clickOrder[0] === "gu_btn" &&
+      clickOrder[1] === "gu_btn" &&
+      clickOrder[2] === "par_btn" &&
+      clickOrder[3] === "cho_btn" &&
+      clickOrder[4] === "par_btn"){
       victoryAchieved = true;  
       console.log("確変");
       // const a = 1;
   }
   if (victoryAchieved) {
-    $("#gu_btn, #cho_btn, #par_btn").off("click");  
   $("#gu_btn, #cho_btn, #par_btn").on("click",function(){
   winN++;
-  gameN++;
   $("#pc_hands").html('<img src="./img/l1.png">');
   setTimeout(function() {
   $("#judgment").html("かち");
   $("#winN").html(winN + "回");
   // console.log(winN + "回");
-  }, 400);
-  $("#jankenN").html(gameN + `回`);
-  
-  finalParcent = (winN / gameN * 100).toFixed(1); // finalParcentに値を代入
-
-  // console.log(finalParcent + "%");
-  setTimeout(function() {
-    $("#winParcent").html(finalParcent + "%");
-  }, 400);
-
-  if (gameN === 7 && winN / gameN * 100 >= 50) {
-    setTimeout(function() {
-      $("#winParImg").html("おめでとう");
-    }, 400);
-
-  } else if (gameN === 7 && winN / gameN * 100 >= 30) {
-    setTimeout(function() {
-      $("#winParImg").html("あともう少し");
-    }, 400);
-
-  } else if (gameN === 7 && winN / gameN * 100 < 30) {
-    setTimeout(function() {
-      $("#winParImg").html("残念");
-    }, 400);
-
-  } else {
-    $("#winParImg").html("残り" + (7 - gameN) + "回");
-  };
-
-  if (gameN === 7) {
-    document.getElementById("gu_btn").style.pointerEvents = "none";
-    document.getElementById("cho_btn").style.pointerEvents = "none";
-    document.getElementById("par_btn").style.pointerEvents = "none";
-    setTimeout(function() {
-      $("#endBtn").css("display", "block");
-    }, 400);
-  }
+  }, 400); 
   // $("#judgment").html("かち");
-  
   });
   };
 });
