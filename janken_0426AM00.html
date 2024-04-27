@@ -11,12 +11,13 @@
 
 <header>
   <h1>じゃんけん</h1>
-  <h3>20回対戦して勝率<span>50%</span>を目指しそう！</h3>
+  <h3>7回対戦して勝率<span>50%</span>を目指しそう！</h3>
 </header>
 
 <main>
   <div class="jankenN">対戦回数：<span id="jankenN">0回</div>
   <div class="Evaluation"><span id="winParImg"></div>
+  <div class="enemyHP">enemyHP:<span id="enemyHP"></div>
 
   <ul>
     <li id="gu_btn">グー✊</li>
@@ -49,6 +50,9 @@ let winN = 0;
 let evenN = 0;
 let loseN = 0;
 let gameN = 0;
+let enemyHP = 200;
+$("#enemyHP").html(enemyHP);
+
 
 $("#gu_btn").on("click",function() {
   
@@ -198,26 +202,26 @@ $("#gu_btn, #cho_btn, #par_btn").on("click",function() {
     $("#winParcent").html(finalParcent + "%");
   }, 400);
 
-  if (gameN === 20 && winN / gameN * 100 >= 50) {
+  if (gameN === 7 && winN / gameN * 100 >= 50) {
     setTimeout(function() {
       $("#winParImg").html("おめでとう");
     }, 400);
 
-  } else if (gameN === 20 && winN / gameN * 100 >= 30) {
+  } else if (gameN === 7 && winN / gameN * 100 >= 30) {
     setTimeout(function() {
       $("#winParImg").html("あともう少し");
     }, 400);
 
-  } else if (gameN === 20 && winN / gameN * 100 < 30) {
+  } else if (gameN === 7 && winN / gameN * 100 < 30) {
     setTimeout(function() {
       $("#winParImg").html("残念");
     }, 400);
 
   } else {
-    $("#winParImg").html("残り" + (20 - gameN) + "回");
+    $("#winParImg").html("残り" + (7 - gameN) + "回");
   };
 
-  if (gameN === 20) {
+  if (gameN === 7) {
     document.getElementById("gu_btn").style.pointerEvents = "none";
     document.getElementById("cho_btn").style.pointerEvents = "none";
     document.getElementById("par_btn").style.pointerEvents = "none";
@@ -277,13 +281,35 @@ $("#endBtn").on("click", function() {
   
 
 
-  let average = sum / winParcentList.length;
+  let average = (sum / winParcentList.length).toFixed(1);
   console.log("Average", average);
-  
+    
+  enemyHP = (200 - sum).toFixed(1);
+  $("#enemyHP").html(enemyHP);
+  console.log("残りHP:", enemyHP);
 
+
+    // averageを分解してそれぞれ整数値として与え直す。
+    let tensDigit = Math.floor(average / 10);
+
+    // 一の位を取得
+    let onesDigit = Math.floor(average) % 10;
+
+    // 小数点以下の一の位を取得
+    let onesDecimalDigit = Math.floor((average - Math.floor(average)) * 10);
+
+    // 結果を出力
+    // console.log("tensDigit:", tensDigit);
+    // console.log("onesDigit:", onesDigit);
+    // console.log("onesDecimalDigit:", onesDecimalDigit);
+    let finalAtack = tensDigit * onesDigit * onesDecimalDigit;
+    // console.log("finalAtack:", finalAtack);
+    
+    FinalHP = enemyHP - finalAtack;
+    console.log("最終HP:", FinalHP);
+
+    
 });
-
-
 
   
 
