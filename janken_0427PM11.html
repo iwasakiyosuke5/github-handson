@@ -48,19 +48,21 @@
 //じゃんけん用のSCRIPTを書いてください
 let winN = 0;
 let evenN = 0;
+let totalEven = 0;
 let loseN = 0;
 let gameN = 0;
 let enemyHP = 200;
 $("#enemyHP").html(enemyHP);
-
+// 裏技用の順序リスト
 let clickOrder = [];
+
 let victoryAchieved = false;
 
 $("#gu_btn, #cho_btn, #par_btn").on("click", function() {
   const buttonId = $(this).attr("id");
   clickOrder.push(buttonId);
   
-  // ボタンが5回クリックされたときのみ処理を行う
+  //下記でどのタイミングでもgu,gu,par,cho,parの順でクリックされた時、確変モードに突入を指示
   if (clickOrder.length >= 5 &&
       clickOrder[clickOrder.length - 5] === "gu_btn" &&
       clickOrder[clickOrder.length - 4] === "gu_btn" &&
@@ -71,59 +73,52 @@ $("#gu_btn, #cho_btn, #par_btn").on("click", function() {
       console.log("確変");
       // const a = 1;
   }
+  // 確変モードの時の処理
   if (victoryAchieved) {
+    //"#gu_btn, #cho_btn, #par_btn"二重クリックを解除 
     $("#gu_btn, #cho_btn, #par_btn").off("click");  
-  $("#gu_btn, #cho_btn, #par_btn").on("click",function(){
-  winN++;
-  gameN++;
-  $("#pc_hands").html('<img src="./img/l1.png">');
-  setTimeout(function() {
-  $("#judgment").html("かち");
-  $("#winN").html(winN + "回");
-  // console.log(winN + "回");
-  }, 400);
-  $("#jankenN").html(gameN + `回`);
-  
-  finalParcent = (winN / gameN * 100).toFixed(1); // finalParcentに値を代入
+    // 再度"#gu_btn, #cho_btn, #par_btn"がvictoryAchieved:trueの時のみクリックされるように設定
+    $("#gu_btn, #cho_btn, #par_btn").on("click",function(){
+      winN++;
+      gameN++;
+      $("#pc_hands").html('<img src="./img/l1.png">');
+      setTimeout(function() {
+        $("#judgment").html("かち");
+        $("#winN").html(winN + "回");
+        // console.log(winN + "回");
+      }, 400);
+      $("#jankenN").html(gameN + `回`);
+      finalParcent = (winN / gameN * 100).toFixed(1); // finalParcentに値を代入
 
-  // console.log(finalParcent + "%");
-  setTimeout(function() {
-    $("#winParcent").html(finalParcent + "%");
-  }, 400);
+      // console.log(finalParcent + "%");
+      setTimeout(function() {
+        $("#winParcent").html(finalParcent + "%");
+      }, 400);
 
-  if (gameN === 7 && winN / gameN * 100 >= 50) {
-    setTimeout(function() {
-      $("#winParImg").html("確変！");
-    }, 400);
+      if (gameN === 7) {
+        setTimeout(function() {
+          $("#winParImg").html("確変！");
+        }, 400);
+      }else{
+        setTimeout(function() {
+          $("#winParImg").html("確変！");
+        }, 400);
+      };
 
-  } else if (gameN === 7 && winN / gameN * 100 >= 30) {
-    setTimeout(function() {
-      $("#winParImg").html("確変！");
-    }, 400);
-
-  } else if (gameN === 7 && winN / gameN * 100 < 30) {
-    setTimeout(function() {
-      $("#winParImg").html("確変！");
-    }, 400);
-
-  } else {
-    $("#winParImg").html("確変！");
-  };
-
-  if (gameN === 7) {
-    document.getElementById("gu_btn").style.pointerEvents = "none";
-    document.getElementById("cho_btn").style.pointerEvents = "none";
-    document.getElementById("par_btn").style.pointerEvents = "none";
-    setTimeout(function() {
-      $("#endBtn").css("display", "block");
-    }, 400);
-  }
-  // $("#judgment").html("かち");
-  
-  });
+      if (gameN === 7) {
+        document.getElementById("gu_btn").style.pointerEvents = "none";
+        document.getElementById("cho_btn").style.pointerEvents = "none";
+        document.getElementById("par_btn").style.pointerEvents = "none";
+        setTimeout(function() {
+          $("#endBtn").css("display", "block");
+        }, 400);
+      }
+    });
   };
 });
 
+// ここから通常モードでのじゃんけんプログラム
+// guを押した時の勝ち負け
 $("#gu_btn").on("click",function() {
   
   const a = Math.ceil(Math.random()*3)
@@ -146,6 +141,7 @@ $("#gu_btn").on("click",function() {
     
   }else if(a === 2){
     // console.log("even");
+    totalEven++;
     evenN++;
     $("#pc_hands").html('<img src="./img/gu.png">');
     setTimeout(function() {
@@ -172,6 +168,7 @@ $("#gu_btn").on("click",function() {
 
 });
 
+// choを押した時の勝ち負け
 $("#cho_btn").on("click",function() {
   
   const a = Math.ceil(Math.random()*3)
@@ -194,6 +191,7 @@ $("#cho_btn").on("click",function() {
 
   }else if(a === 2){
     // console.log("even");
+    totalEven++;
     evenN++;
     $("#pc_hands").html('<img src="./img/cho.png">');
     setTimeout(function() {
@@ -216,6 +214,7 @@ $("#cho_btn").on("click",function() {
 
 });
 
+// parを押した時の勝ち負け
 $("#par_btn").on("click",function() {
   
   const a = Math.ceil(Math.random()*3)
@@ -237,6 +236,7 @@ $("#par_btn").on("click",function() {
 
   }else if(a === 2){
     // console.log("even");
+    totalEven++;
     evenN++;
     $("#pc_hands").html('<img src="./img/par.png">');
     setTimeout(function() {
@@ -262,13 +262,14 @@ $("#par_btn").on("click",function() {
 
 
 
-
+// #gu_btn, #cho_btn, #par_btn"どれを押しても増える試合数の計算用
 $("#gu_btn, #cho_btn, #par_btn").on("click",function() {
   gameN++;
   // console.log("gameN:" + gameN);
   $("#jankenN").html(gameN + `回`);
   
-  finalParcent = (winN / gameN * 100).toFixed(1); // finalParcentに値を代入
+  // 勝率=finalParcent
+  finalParcent = (winN / gameN * 100).toFixed(1); 
 
   // console.log(finalParcent + "%");
   setTimeout(function() {
@@ -305,12 +306,13 @@ $("#gu_btn, #cho_btn, #par_btn").on("click",function() {
 
 });
 
+// 勝率を収納するリスト
 let winParcentList = [];
-
 let finalParcent = 0; // 初期値を設定
 let setCounter = 1;
 
 $("#endBtn").on("click", function() {
+  // endoBtnを押した時にゼロに戻すべき数値の処理
   winN = 0;
   evenN = 0;
   loseN = 0;
@@ -321,10 +323,11 @@ $("#endBtn").on("click", function() {
   winParcentList.push(finalParcent);
   // console.log(winParcentList);
   
+  // 下記書き方に納得いかないが、覚えることとする
   let footerHTML = "相手に与えたダメージ(勝率)：" + winParcentList.join(", ") + "";
+ 
+  // フッターに相手に与えたダメージを記載していく
   $("footer").html(footerHTML);  
-
-
 
   $("#pc_hands").html("なに？");
   $("#judgment").html("-");
@@ -336,20 +339,20 @@ $("#endBtn").on("click", function() {
   $("#winParcent").html("0%");
   $("#winParImg").html("");
   $("#endBtn").css("display", "none");
+  // 一度消したボタン復活機能を再生
   document.getElementById("gu_btn").style.pointerEvents = "auto";
   document.getElementById("cho_btn").style.pointerEvents = "auto";
   document.getElementById("par_btn").style.pointerEvents = "auto";
     
     for (let index = 0; index < winParcentList.length; index += 1){
       let item = winParcentList[index];
-      
+      // なぜか文字列化しているためparseFloatで数値化する
       sum += parseFloat(item); 
-      console.log("item:", item)
-      console.log("sum:", sum)
-      console.log("finalParcent:", finalParcent);
-      console.log("finalParcent is a number:", !isNaN(finalParcent));
-      console.log(item);
-      // フッターに勝率を表示
+      // console.log("item:", item)
+      // console.log("sum:", sum)
+      // console.log("finalParcent:", finalParcent);
+      // console.log("finalParcent is a number:", !isNaN(finalParcent));
+      // console.log(item);
     };
 
   
@@ -376,7 +379,7 @@ $("#endBtn").on("click", function() {
     console.log("tensDigit:", tensDigit);
     console.log("onesDigit:", onesDigit);
     console.log("onesDecimalDigit:", onesDecimalDigit);
-    let finalAtack = tensDigit * onesDigit * onesDecimalDigit;
+    let finalAtack = tensDigit * onesDigit * onesDecimalDigit * totalEven / 3;
     console.log("finalAtack:", finalAtack);
     
     FinalHP = enemyHP - finalAtack;
@@ -401,7 +404,7 @@ $("#endBtn").on("click", function() {
     document.getElementById("gu_btn").style.pointerEvents = "none";
     document.getElementById("cho_btn").style.pointerEvents = "none";
     document.getElementById("par_btn").style.pointerEvents = "none";
-
+    console.log("総引き分け数：", totalEven);
   }
 
   $("#endBtn").html(setText);
@@ -425,7 +428,7 @@ $("#endBtn").on("click", function() {
     };
 
     $(this).hide();
-    $(this).after('<button id="allClear">最初から</button>');
+    $(this).after('<button id="allClear">最初から<br>"#finalAtack"</button>');
     $("#allClear").on("click", function() {
       location.reload();
     });
