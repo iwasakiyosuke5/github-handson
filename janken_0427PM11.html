@@ -15,6 +15,15 @@
 </header>
 
 <main>
+  <div>
+    <select id="difficultySelect">
+      <option value="" hidden>対戦相手のレベルを選ぼう</option>
+      <option value="easy">かんたん</option>
+      <option value="medium">ふつう</option>
+      <option value="hard">むずかしい</option>
+    </select>
+
+  </div>
   <div class="jankenN">対戦回数：<span id="jankenN">0回</div>
   <div class="Evaluation"><span id="winParImg"></div>
   <div class="enemyHP">対戦相手のHP：<span id="enemyHP"></div>
@@ -41,10 +50,19 @@
 <footer class="footer">
   <p>copyrights jajankenkyokai.</p>
 </footer>
-
+<footer2>
+  <div class="pattarn2">
+    <details class="summary"> 
+      <summary>初回版からの変更点</summary>
+      <p>単純なじゃんけんゲームから、じゃんけんの勝率でダメージを与える仕様に変更</p>
+      <p>平均勝率(ex.52.9%)を5*2*9として計算できるようにして、<br>平均引き分け数と掛け合わせて<br>最後のチャンス機能を搭載</p>
+      <p>決められた順序でグーチョキパーをクリックすると、確変モードに突入する<br>→通常モードのクリックとの重複問題の解決に相当の時間を有しました。
+      </p>
+</footer2> 
 
 
 <script>
+
 //じゃんけん用のSCRIPTを書いてください
 let winN = 0;
 let evenN = 0;
@@ -117,147 +135,436 @@ $("#gu_btn, #cho_btn, #par_btn").on("click", function() {
   };
 });
 
-// ここから通常モードでのじゃんけんプログラム
-// guを押した時の勝ち負け
-$("#gu_btn").on("click",function() {
+$("#difficultySelect").on("change", function() {
+  console.log("難易度が変更されました");
+  const selectedDifficulty = $(this).val();
+  console.log("選択された難易度:", selectedDifficulty);
   
-  const a = Math.ceil(Math.random()*3)
-  $("#cho_btn, #par_btn").css("filter", "blur(5px)");
-  setTimeout(function() {
-    $("#cho_btn, #par_btn").css("filter", "");
-  }, 400); 
-
-  if(a === 1){
-    // console.log("good");
-    winN++;
-    $("#pc_hands").html('<img src="./img/cho.png">');
+if (selectedDifficulty === "easy"){
+  // ここから通常モードでのじゃんけんプログラム
+  // guを押した時の勝ち負け
+  $("#gu_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#cho_btn, #par_btn").css("filter", "blur(5px)");
     setTimeout(function() {
-    $("#judgment").html("かち");
-    $("#winN").html(winN + "回");
-    // console.log(winN + "回");
-    }, 400); 
-    // $("#judgment").html("かち");
-    
-    
-  }else if(a === 2){
-    // console.log("even");
-    totalEven++;
-    evenN++;
-    $("#pc_hands").html('<img src="./img/gu.png">');
-    setTimeout(function() {
-    $("#judgment").html("引き分け");
-    $("#evenN").html(evenN + "回");
-    // console.log(evenN + "回");
-    }, 400); 
-    // $("#judgment").html("引き分け");
-    
-    
-  }else{
-    // console.log("bad");
-    loseN++;
-    $("#pc_hands").html('<img src="./img/par.png">');
-    setTimeout(function() {
-    $("#judgment").html("負け");
-    $("#loseN").html(loseN + "回");
-    // console.log(loseN + "回");
+      $("#cho_btn, #par_btn").css("filter", "");
     }, 400); 
 
-    // $("#judgment").html("負け");
-  };
-  
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400); 
+      // $("#judgment").html("かち");
+      
+      
+    }else if(a === 2){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      // $("#judgment").html("引き分け");
+      
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
 
+      // $("#judgment").html("負け");
+    };
+    
+
+  });
+
+  // choを押した時の勝ち負け
+  $("#cho_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#gu_btn, #par_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#gu_btn, #par_btn").css("filter", "");
+    }, 400); 
+    
+
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400);
+      
+
+    }else if(a === 2){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+    };
+    
+
+  });
+
+  // parを押した時の勝ち負け
+  $("#par_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#cho_btn, #gu_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#cho_btn, #gu_btn").css("filter", "");
+    }, 400); 
+    
+
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400);
+
+    }else if(a === 2){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+    };
+    
+  });
+}else if(selectedDifficulty === "medium"){
+  // ここから通常モードでのじゃんけんプログラム
+  // guを押した時の勝ち負け
+  $("#gu_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*5)
+    $("#cho_btn, #par_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#cho_btn, #par_btn").css("filter", "");
+    }, 400); 
+
+    if(a === 1){
+      console.log("n good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400); 
+      // $("#judgment").html("かち");
+      
+      
+    }else if(a === 2 || a === 4){
+      console.log("n even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      // $("#judgment").html("引き分け");
+      
+      
+    }else{
+      console.log("n bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+
+      // $("#judgment").html("負け");
+    };
+    
+
+  });
+
+  // choを押した時の勝ち負け
+  $("#cho_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#gu_btn, #par_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#gu_btn, #par_btn").css("filter", "");
+    }, 400); 
+    
+
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400);
+      
+
+    }else if(a === 2 || a === 4){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+    };
+    
+
+  });
+
+  // parを押した時の勝ち負け
+  $("#par_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#cho_btn, #gu_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#cho_btn, #gu_btn").css("filter", "");
+    }, 400); 
+    
+
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400);
+
+    }else if(a === 2 || a ===4){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+    };
+    
+  });
+}else if (selectedDifficulty === "hard"){
+  // ここから通常モードでのじゃんけんプログラム
+  // guを押した時の勝ち負け
+  $("#gu_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*7)
+    $("#cho_btn, #par_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#cho_btn, #par_btn").css("filter", "");
+    }, 400); 
+
+    if(a === 1){
+      console.log("h good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400); 
+      // $("#judgment").html("かち");
+      
+      
+    }else if(a === 2 || a === 4 || a === 6){
+      console.log("h even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      // $("#judgment").html("引き分け");
+      
+      
+    }else{
+      console.log("h bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+
+      // $("#judgment").html("負け");
+    };
+    
+
+  });
+
+  // choを押した時の勝ち負け
+  $("#cho_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#gu_btn, #par_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#gu_btn, #par_btn").css("filter", "");
+    }, 400); 
+    
+
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400);
+      
+
+    }else if(a === 2 || a === 4 || a === 6){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+    };
+    
+
+  });
+
+  // parを押した時の勝ち負け
+  $("#par_btn").on("click",function() {
+    
+    const a = Math.ceil(Math.random()*3)
+    $("#cho_btn, #gu_btn").css("filter", "blur(5px)");
+    setTimeout(function() {
+      $("#cho_btn, #gu_btn").css("filter", "");
+    }, 400); 
+    
+
+    if(a === 1){
+      // console.log("good");
+      winN++;
+      $("#pc_hands").html('<img src="./img/gu.png">');
+      setTimeout(function() {
+      $("#judgment").html("かち");
+      $("#winN").html(winN + "回");
+      // console.log(winN + "回");
+      }, 400);
+
+    }else if(a === 2 || a === 4 || a === 6){
+      // console.log("even");
+      totalEven++;
+      evenN++;
+      $("#pc_hands").html('<img src="./img/par.png">');
+      setTimeout(function() {
+      $("#judgment").html("引き分け");
+      $("#evenN").html(evenN + "回");
+      // console.log(evenN + "回");
+      }, 400); 
+      
+    }else{
+      // console.log("bad");
+      loseN++;
+      $("#pc_hands").html('<img src="./img/cho.png">');
+      setTimeout(function() {
+      $("#judgment").html("負け");
+      $("#loseN").html(loseN + "回");
+      // console.log(loseN + "回");
+      }, 400); 
+    };
+    
+  });
+};
 });
-
-// choを押した時の勝ち負け
-$("#cho_btn").on("click",function() {
-  
-  const a = Math.ceil(Math.random()*3)
-  $("#gu_btn, #par_btn").css("filter", "blur(5px)");
-  setTimeout(function() {
-    $("#gu_btn, #par_btn").css("filter", "");
-  }, 400); 
-  
-
-  if(a === 1){
-    // console.log("good");
-    winN++;
-    $("#pc_hands").html('<img src="./img/par.png">');
-    setTimeout(function() {
-    $("#judgment").html("かち");
-    $("#winN").html(winN + "回");
-    // console.log(winN + "回");
-    }, 400);
-    
-
-  }else if(a === 2){
-    // console.log("even");
-    totalEven++;
-    evenN++;
-    $("#pc_hands").html('<img src="./img/cho.png">');
-    setTimeout(function() {
-    $("#judgment").html("引き分け");
-    $("#evenN").html(evenN + "回");
-    // console.log(evenN + "回");
-    }, 400); 
-    
-  }else{
-    // console.log("bad");
-    loseN++;
-    $("#pc_hands").html('<img src="./img/gu.png">');
-    setTimeout(function() {
-    $("#judgment").html("負け");
-    $("#loseN").html(loseN + "回");
-    // console.log(loseN + "回");
-    }, 400); 
-  };
-  
-
-});
-
-// parを押した時の勝ち負け
-$("#par_btn").on("click",function() {
-  
-  const a = Math.ceil(Math.random()*3)
-  $("#cho_btn, #gu_btn").css("filter", "blur(5px)");
-  setTimeout(function() {
-    $("#cho_btn, #gu_btn").css("filter", "");
-  }, 400); 
-  
-
-  if(a === 1){
-    // console.log("good");
-    winN++;
-    $("#pc_hands").html('<img src="./img/gu.png">');
-    setTimeout(function() {
-    $("#judgment").html("かち");
-    $("#winN").html(winN + "回");
-    // console.log(winN + "回");
-    }, 400);
-
-  }else if(a === 2){
-    // console.log("even");
-    totalEven++;
-    evenN++;
-    $("#pc_hands").html('<img src="./img/par.png">');
-    setTimeout(function() {
-    $("#judgment").html("引き分け");
-    $("#evenN").html(evenN + "回");
-    // console.log(evenN + "回");
-    }, 400); 
-    
-  }else{
-    // console.log("bad");
-    loseN++;
-    $("#pc_hands").html('<img src="./img/cho.png">');
-    setTimeout(function() {
-    $("#judgment").html("負け");
-    $("#loseN").html(loseN + "回");
-    // console.log(loseN + "回");
-    }, 400); 
-  };
-  
-});
-  
 
 
 
@@ -358,14 +665,16 @@ $("#endBtn").on("click", function() {
   
 
 
-  let average = (sum / winParcentList.length).toFixed(1);
+  let average = (sum / winParcentList.length).toFixed(2);
   console.log("Average", average);
     
   enemyHP = (200 - sum).toFixed(1);
-  $("#enemyHP").html(enemyHP);
-  console.log("残りHP:", enemyHP);
-
-
+  if (enemyHP >= 0){
+    $("#enemyHP").html(enemyHP);
+  }else{
+    $("#enemyHP").html(0);
+  }
+  
     // averageを分解してそれぞれ整数値として与え直す。
     let tensDigit = Math.floor(average / 10);
 
@@ -382,7 +691,7 @@ $("#endBtn").on("click", function() {
     let finalAtack = tensDigit * onesDigit * onesDecimalDigit * totalEven / 3;
     console.log("finalAtack:", finalAtack);
     
-    FinalHP = enemyHP - finalAtack;
+    FinalHP = (enemyHP - finalAtack).toFixed(1);
     console.log("最終HP:", FinalHP);
 
   
@@ -428,7 +737,7 @@ $("#endBtn").on("click", function() {
     };
 
     $(this).hide();
-    $(this).after('<button id="allClear">最初から<br>"#finalAtack"</button>');
+    $(this).after('<button id="allClear">最初から</button>');
     $("#allClear").on("click", function() {
       location.reload();
     });

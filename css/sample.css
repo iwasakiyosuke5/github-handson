@@ -88,6 +88,61 @@ main{
     
 }   
     
+#lastChanceBtn{
+        
+    box-shadow: 0 7px rgb(130, 130, 130);
+    border-radius: 15px;
+    border: #1affec;
+    background-color: #1affec;
+    height: 60px;
+    width: 300px;
+    font-size: 18px;
+    cursor: alias;
+    
+
+}
+#lastChanceBtn:hover {
+    border: 2px solid #707070;
+    box-sizing: border-box;
+    
+    
+}
+#lastChanceBtn:active {
+
+    box-shadow: none;
+    position: relative;
+    top: 7px;
+}
+
+#allClear{
+        
+    box-shadow: 0 7px rgb(130, 130, 130);
+    border-radius: 15px;
+    border: #f20e0e;
+    background-color: #f20e0e;
+    height: 60px;
+    width: 300px;
+    font-size: 18px;
+    font-color: white;
+    cursor: alias;
+    
+
+}
+#allClear:hover {
+    border: 2px solid #707070;
+    box-sizing: border-box;
+    
+    
+}
+#allClear:active {
+
+    box-shadow: none;
+    position: relative;
+    top: 7px;
+}
+
+
+
 footer{
     background-color: #fff;
     border-bottom:1px solid #ccc;
@@ -138,4 +193,13 @@ li:active{
     background-color: #707070;
     padding: 10px 0;
     margin-bottom: 0px;
+}
+
+.summary {
+    summary{
+        font-size: 26px;
+    }
+    p{
+        font-size: 20px;
+    }
 }
