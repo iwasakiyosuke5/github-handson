@@ -93,21 +93,21 @@ $("#gu_btn, #cho_btn, #par_btn").on("click", function() {
 
   if (gameN === 7 && winN / gameN * 100 >= 50) {
     setTimeout(function() {
-      $("#winParImg").html("おめでとう");
+      $("#winParImg").html("確変！");
     }, 400);
 
   } else if (gameN === 7 && winN / gameN * 100 >= 30) {
     setTimeout(function() {
-      $("#winParImg").html("あともう少し");
+      $("#winParImg").html("確変！");
     }, 400);
 
   } else if (gameN === 7 && winN / gameN * 100 < 30) {
     setTimeout(function() {
-      $("#winParImg").html("残念");
+      $("#winParImg").html("確変！");
     }, 400);
 
   } else {
-    $("#winParImg").html("残り" + (7 - gameN) + "回");
+    $("#winParImg").html("確変！");
   };
 
   if (gameN === 7) {
