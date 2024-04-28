@@ -4,6 +4,22 @@ body{
     text-align:left;
     font-size: 32px;
 }
+
+.select{
+    display: flex;
+    justify-content: center;
+}
+
+select{
+    text-align: center;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #ffd61a;
+    border: 1px solid #707070;
+    width: 308px;
+    font-size: 20px;
+}
+
 header{
     background-color: #fff;
     border-bottom: 1px solid #ccc;
