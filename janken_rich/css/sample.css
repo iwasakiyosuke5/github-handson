@@ -5,6 +5,10 @@ body{
     font-size: 32px;
 }
 
+.celeb{
+    width: 500px;
+}
+
 .select{
     display: flex;
     justify-content: center;
@@ -49,6 +53,7 @@ main{
         justify-content: center;
 
     }
+
 
     .results{
         display: flex;

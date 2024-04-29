@@ -34,7 +34,7 @@
     <li id="par_btn">パー🖐️</li>
   </ul>
   <div class="vsHand">
-    <div>対戦相手は</div>
+    <div id="taisenaite">対戦相手は</div>
     <div id="pc_hands">なに？</div>    
   </div>
   <div class="judgment">判定：<span id="judgment">-</div>
@@ -99,7 +99,8 @@ $("#gu_btn, #cho_btn, #par_btn").on("click", function() {
     $("#gu_btn, #cho_btn, #par_btn").on("click",function(){
       winN++;
       gameN++;
-      $("#pc_hands").html('<img src="./img/l1.png">');
+      $("#taisenaite").html('');
+      $("#pc_hands").html('<img class=celeb src="./img/Firefly_celeb.jpg">');
       setTimeout(function() {
         $("#judgment").html("かち");
         $("#winN").html(winN + "回");
