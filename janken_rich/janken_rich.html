@@ -699,6 +699,11 @@ $("#endBtn").on("click", function() {
 });
 let lastChancePressed = 0;
 
+
+$("#difficultySelect").on("change", function() {
+  console.log("難易度が変更されました");
+  const selectedDifficulty = $(this).val();
+  console.log("選択された難易度:", selectedDifficulty);
 $("#endBtn").on("click", function() {
   // endBtnの表示変更
   setCounter += 1;
@@ -725,11 +730,13 @@ $("#endBtn").on("click", function() {
     $("#endBtn").after('<button id="lastChanceBtn">ラストチャンス<br>(勝率次第じゃチャンスあり)</button>');
   }
 
+  
+  if (selectedDifficulty === "easy"){
   $("#lastChanceBtn").on("click", function() {
     $("#enemyHP").html(FinalHP);
-
+        
     if (FinalHP <= 0) {
-      $("#pc_hands").html("泣");
+      $("#pc_hands").html("e泣");
       $("#enemyHP").html(0);
     }else if(FinalHP <= 40) {
       $("#pc_hands").html("半泣き");
@@ -744,8 +751,49 @@ $("#endBtn").on("click", function() {
     });
 
   });
-});
+  }else if(selectedDifficulty === "medium"){
+    $("#lastChanceBtn").on("click", function() {
+    $("#enemyHP").html(FinalHP);
+        
+    if (FinalHP <= 0) {
+      $("#pc_hands").html("n泣");
+      $("#enemyHP").html(0);
+    }else if(FinalHP <= 40) {
+      $("#pc_hands").html("半泣き");
+    }else{
+      $("#pc_hands").html("へっちゃら");
+    };
 
+    $(this).hide();
+    $(this).after('<button id="allClear">最初から</button>');
+    $("#allClear").on("click", function() {
+      location.reload();
+    });
+
+  });
+  }else if(selectedDifficulty === "hard"){
+    $("#lastChanceBtn").on("click", function() {
+    $("#enemyHP").html(FinalHP);
+        
+    if (FinalHP <= 0) {
+      $("#pc_hands").html("h泣");
+      $("#enemyHP").html(0);
+    }else if(FinalHP <= 40) {
+      $("#pc_hands").html("半泣き");
+    }else{
+      $("#pc_hands").html("へっちゃら");
+    };
+
+    $(this).hide();
+    $(this).after('<button id="allClear">最初から</button>');
+    $("#allClear").on("click", function() {
+      location.reload();
+    });
+
+  });
+  }
+});
+});
   
 
 
